@@ -8,6 +8,7 @@ import { Prisma } from "@prisma/client";
 import Image from "next/image";
 
 import { auth } from "@clerk/nextjs/server";
+import { ArrowDownNarrowWide, Filter } from "lucide-react";
 
 type ResultList = {
   id: number;
@@ -214,10 +215,10 @@ const renderRow = (item: ResultList) => (
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
-              <Image src="/filter.png" alt="" width={14} height={14} />
+              <Filter/>
             </button>
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
-              <Image src="/sort.png" alt="" width={14} height={14} />
+            <ArrowDownNarrowWide/>
             </button>
             {(role === "admin" || role === "teacher") && (
               <FormContainer table="result" type="create" />

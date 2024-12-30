@@ -7,6 +7,7 @@ import { ITEM_PER_PAGE } from "@/lib/settings";
 import { Class, Lesson, Prisma, Subject, Teacher } from "@prisma/client";
 import Image from "next/image";
 import { auth } from "@clerk/nextjs/server";
+import { ArrowDownNarrowWide, Filter } from "lucide-react";
 
 type LessonList = Lesson & { subject: Subject } & { class: Class } & {
   teacher: Teacher;
@@ -19,7 +20,7 @@ const LessonListPage = async ({
   searchParams: { [key: string]: string | undefined };
 }) => {
 
-const { sessionClaims } = auth();
+const { sessionClaims } =await auth();
 const role = (sessionClaims?.metadata as { role?: string })?.role;
 
 
@@ -83,7 +84,8 @@ const renderRow = (item: LessonList) => (
       if (value !== undefined) {
         switch (key) {
           case "classId":
-            query.classId = parseInt(value);
+            // query.classId = parseInt(value);
+            query.classId = value.toString();
             break;
           case "teacherId":
             query.teacherId = value;
@@ -124,10 +126,10 @@ const renderRow = (item: LessonList) => (
           <TableSearch />
           <div className="flex items-center gap-4 self-end">
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
-              <Image src="/filter.png" alt="" width={14} height={14} />
+              <Filter/>
             </button>
             <button className="w-8 h-8 flex items-center justify-center rounded-full bg-lamaYellow">
-              <Image src="/sort.png" alt="" width={14} height={14} />
+            <ArrowDownNarrowWide/>
             </button>
             {role === "admin" && <FormContainer table="lesson" type="create" />}
           </div>
